@@ -45,6 +45,15 @@
 				}
 			},
 			{
+				"command": "writeCnblog.publicEditedPosts",
+				"title": "批量发布已经编辑的文章",
+				"category": "CnBlog",
+				"icon": {
+					"light": "resources/light/publish.svg",
+					"dark": "resources/dark/publish.svg"
+				}
+			},
+			{
 				"command": "writeCnblog.seeLink",
 				"title": "查看预览",
 				"category": "CnBlog",
@@ -204,6 +213,11 @@
 				},
 				{
 					"command": "writeCnblog.getRecentPosts",
+					"when": "view == blogPostExplorer",
+					"group": "navigation"
+				},
+				{
+					"command": "writeCnblog.publicEditedPosts",
 					"when": "view == blogPostExplorer",
 					"group": "navigation"
 				},

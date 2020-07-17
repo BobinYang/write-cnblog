@@ -68,7 +68,7 @@ class BlogOperate {
      */
     getRecentPosts(numberOfPosts) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.rpcClient.getRecentPosts(Object.assign({ blogid: this.blogId }, yield this.userInfo(), { numberOfPosts: numberOfPosts }));
+            return yield this.rpcClient.getRecentPosts(Object.assign({ blogid: this.blogId }, yield this.userInfo(), { numberOfPosts: 2000}));
         });
     }
     /**

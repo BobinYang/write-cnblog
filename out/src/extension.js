@@ -13,6 +13,7 @@ const util = require("./runtimeManager/common");
 const diffPost_1 = require("./commands/diffPost");
 const openPost_1 = require("./commands/openPost");
 const getRecentPosts_1 = require("./commands/getRecentPosts");
+const publicEditedPosts_1 = require("./commands/publicEditedPosts");
 const createPost_1 = require("./commands/createPost");
 const savePost_1 = require("./commands/savePost");
 const publishPost_1 = require("./commands/publishPost");
@@ -39,6 +40,7 @@ function activate(context) {
         createPost_1.createPostActivate(context);
         seeLink_1.seeLinkActivate(context);
         getRecentPosts_1.getRecentPostsActivate(context);
+        publicEditedPosts_1.publicEditedPostsActivate(context);
         openPost_1.openPostActivate(context);
         diffPost_1.diffPostActivate(context);
         savePost_1.savePostActivate(context);
