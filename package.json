@@ -1,0 +1,338 @@
+{
+	"name": "write-cnblog",
+	"displayName": "WriteCnblog",
+	"description": "write blog to Cnblogs",
+	"version": "0.1.0",
+	"publisher": "caipeiyu",
+	"engines": {
+		"vscode": "^1.31.0"
+	},
+	"license": "SEE LICENSE IN LICENSE.md",
+	"bugs": {
+		"url": "https://github.com/kotcmm/writeCnblog/issues"
+	},
+	"homepage": "https://github.com/kotcmm/writeCnblog/blob/master/README.md",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/kotcmm/writeCnblog.git"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onLanguage:markdown",
+		"onView:blogPostExplorer"
+	],
+	"main": "./out/src/extension",
+	"contributes": {
+		"commands": [
+			{
+				"command": "writeCnblog.createPost",
+				"title": "新建文章",
+				"category": "CnBlog",
+				"icon": {
+					"light": "resources/light/createPost.svg",
+					"dark": "resources/dark/createPost.svg"
+				}
+			},
+			{
+				"command": "writeCnblog.getRecentPosts",
+				"title": "拉取最近文章",
+				"category": "CnBlog",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "writeCnblog.seeLink",
+				"title": "查看预览",
+				"category": "CnBlog",
+				"icon": {
+					"light": "resources/light/eye.svg",
+					"dark": "resources/dark/eye.svg"
+				}
+			},
+			{
+				"command": "writeCnblog.setConfig",
+				"title": "配置设置",
+				"category": "CnBlog"
+			},
+			{
+				"command": "writeCnblog.openPost",
+				"title": "打开文章",
+				"category": "CnBlog"
+			},
+			{
+				"command": "writeCnblog.diffPost",
+				"title": "比较文章",
+				"category": "CnBlog"
+			},
+			{
+				"command": "writeCnblog.savePost",
+				"title": "保存草稿",
+				"category": "CnBlog",
+				"icon": {
+					"light": "resources/light/uploadSave.svg",
+					"dark": "resources/dark/uploadSave.svg"
+				}
+			},
+			{
+				"command": "writeCnblog.publishPost",
+				"title": "发布文章",
+				"category": "CnBlog"
+			},
+			{
+				"command": "writeCnblog.pullPost",
+				"title": "拉取文章",
+				"category": "CnBlog"
+			},
+			{
+				"command": "writeCnblog.renameTitle",
+				"title": "修改标题",
+				"category": "CnBlog"
+			},
+			{
+				"command": "writeCnblog.deletePost",
+				"title": "删除文章",
+				"category": "CnBlog"
+			},
+			{
+				"command": "writeCnblog.pasteImageFromClipboard",
+				"title": "粘贴剪贴板图片",
+				"category": "CnBlog"
+			},
+			{
+				"command": "writeCnblog.refreshCategories",
+				"title": "刷新分类列表",
+				"category": "CnBlog",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "writeCnblog.createCategory",
+				"title": "新建分类",
+				"category": "CnBlog",
+				"icon": {
+					"light": "resources/light/create.svg",
+					"dark": "resources/dark/create.svg"
+				}
+			},
+			{
+				"command": "writeCnblog.selectCategory",
+				"title": "选择分类",
+				"category": "CnBlog"
+			},
+			{
+				"command": "writeCnblog.removeCategory",
+				"title": "移除分类",
+				"category": "CnBlog",
+				"icon": {
+					"light": "resources/light/trash.svg",
+					"dark": "resources/dark/trash.svg"
+				}
+			}
+		],
+		"keybindings": [
+			{
+				"command": "writeCnblog.pasteImageFromClipboard",
+				"key": "shift+alt+v",
+				"mac": "shift+alt+v",
+				"when": "editorTextFocus && editorLangId == 'markdown'"
+			}
+		],
+		"configuration": {
+			"type": "object",
+			"title": "writeCnblog configuration",
+			"properties": {
+				"writeCnblog.rpcUrl": {
+					"type": "string",
+					"default": "",
+					"description": "博客园的MetaWeblog接口地址"
+				},
+				"writeCnblog.userName": {
+					"type": "string",
+					"default": "",
+					"description": "博客园的用户名"
+				},
+				"writeCnblog.blogId": {
+					"type": "string",
+					"default": "",
+					"description": "博客id"
+				},
+				"writeCnblog.blogWorkspace": {
+					"type": "string",
+					"default": "",
+					"description": "工作空间"
+				},
+				"writeCnblog.recentPostCount": {
+					"type": "number",
+					"default": 100,
+					"description": "最近文章的数量"
+				}
+			}
+		},
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "write-cnblog",
+					"title": "WriteCnblog",
+					"icon": "resources/write-cnblog.svg"
+				}
+			]
+		},
+		"views": {
+			"write-cnblog": [
+				{
+					"id": "blogPostExplorer",
+					"name": "文章列表"
+				},
+				{
+					"id": "blogCategoriesExplorer",
+					"name": "分类列表"
+				}
+			]
+		},
+		"menus": {
+			"view/title": [
+				{
+					"command": "writeCnblog.createPost",
+					"when": "view == blogPostExplorer",
+					"group": "navigation"
+				},
+				{
+					"command": "writeCnblog.getRecentPosts",
+					"when": "view == blogPostExplorer",
+					"group": "navigation"
+				},
+				{
+					"command": "writeCnblog.setConfig",
+					"when": "view == blogPostExplorer"
+				},
+				{
+					"command": "writeCnblog.refreshCategories",
+					"when": "view == blogCategoriesExplorer",
+					"group": "navigation"
+				},
+				{
+					"command": "writeCnblog.createCategory",
+					"when": "view == blogCategoriesExplorer",
+					"group": "navigation"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "writeCnblog.publishPost",
+					"when": "view == blogPostExplorer && viewItem =~ /BlogPostItem*/",
+					"group": "1@2"
+				},
+				{
+					"command": "writeCnblog.savePost",
+					"when": "view == blogPostExplorer && viewItem =~ /BlogPostItem*/",
+					"group": "inline"
+				},
+				{
+					"command": "writeCnblog.seeLink",
+					"when": "view == blogPostExplorer && viewItem =~ /BlogPostItem*/",
+					"group": "inline"
+				},
+				{
+					"command": "writeCnblog.diffPost",
+					"when": "view == blogPostExplorer && viewItem == BlogPostItem-diff",
+					"group": "1@1"
+				},
+				{
+					"command": "writeCnblog.pullPost",
+					"when": "view == blogPostExplorer && viewItem =~ /BlogPostItem(?!-create)/",
+					"group": "1@3"
+				},
+				{
+					"command": "writeCnblog.renameTitle",
+					"when": "view == blogPostExplorer && viewItem =~ /BlogPostItem*/",
+					"group": "1@4"
+				},
+				{
+					"command": "writeCnblog.deletePost",
+					"when": "view == blogPostExplorer && viewItem =~ /BlogPostItem*/",
+					"group": "1@5"
+				},
+				{
+					"command": "writeCnblog.selectCategory",
+					"when": "view == blogPostExplorer && viewItem =~ /BlogPostItem*/",
+					"group": "1@2"
+				},
+				{
+					"command": "writeCnblog.removeCategory",
+					"when": "view == blogPostExplorer && viewItem == Category",
+					"group": "inline"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "npm run compile && node ./node_modules/vscode/bin/test",
+		"package": "vsce package -o write-cnblog.vsix"
+	},
+	"devDependencies": {
+		"@types/mkdirp": "^0.5.2",
+		"@types/mocha": "^2.2.42",
+		"@types/node": "^10.11.3",
+		"@types/rimraf": "^2.0.2",
+		"@types/tmp": "0.0.33",
+		"tslint": "^5.8.0",
+		"typescript": "^2.6.1",
+		"vsce": "^1.69.0",
+		"vscode": "^1.1.36"
+	},
+	"dependencies": {
+		"clipboard-data": "0.0.3-beta.7",
+		"http-proxy-agent": "2.1.0",
+		"https-proxy-agent": "2.2.1",
+		"keytar": "^5.0.0-beta.3",
+		"mkdirp": "^0.5.1",
+		"moment": "^2.24.0",
+		"pump": "^3.0.0",
+		"request": "^2.88.0",
+		"rimraf": "^2.6.2",
+		"tar-fs": "^2.0.0",
+		"tmp": "0.0.33",
+		"xml2js": "^0.4.19"
+	},
+	"runtimeDependencies": [
+		{
+			"description": "clipboard-data for Windows",
+			"url": "https://github.com/kotcmm/clipboard-data/releases/download/v0.0.3-beta.7/clipboard-data-v0.0.3-beta.7-electron-v69-win32-x64.tar.gz",
+			"installPath": "node_modules/clipboard-data",
+			"platforms": [
+				"win32"
+			]
+		},
+		{
+			"description": "clipboard-data for macOS",
+			"url": "https://github.com/kotcmm/clipboard-data/releases/download/v0.0.3-beta.7/clipboard-data-v0.0.3-beta.7-electron-v69-darwin-x64.tar.gz",
+			"installPath": "node_modules/clipboard-data",
+			"platforms": [
+				"darwin"
+			]
+		},
+		{
+			"description": "clipboard-data for Linux",
+			"url": "https://github.com/kotcmm/clipboard-data/releases/download/v0.0.3-beta.7/clipboard-data-v0.0.3-beta.7-electron-v69-linux-x64.tar.gz",
+			"installPath": "node_modules/clipboard-data",
+			"platforms": [
+				"linux"
+			]
+		}
+	],
+	"__metadata": {
+		"id": "ec724676-8411-4914-a2a8-bf5483055bce",
+		"publisherId": "c6c19137-3894-4122-bae8-62154f5bfe7f",
+		"publisherDisplayName": "caipeiyu"
+	}
+}
