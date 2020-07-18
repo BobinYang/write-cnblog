@@ -31,13 +31,13 @@ function publicEditedPostsActivate(context) {
                 progress.report({ increment: 10, message: "批量发布文章内容..." });
                 let posts = yield blog_file_1.blogFile.readPosts().sort((a, b) => {
                     if (a.state === b.state) {
-                        if (a.postId && b.postId) {
-                            return b.postId - a.postId;
+                        if (a.dateCreated && b.dateCreated) {
+                            return b.dateCreated - a.dateCreated;
                         }
-                        else if (a.postId && !b.postId) {
+                        else if (a.dateCreated && !b.dateCreated) {
                             return -1;
                         }
-                        else if (!a.postId && !b.postId) {
+                        else if (!a.dateCreated && !b.dateCreated) {
                             return 1;
                         }
                         return 0;

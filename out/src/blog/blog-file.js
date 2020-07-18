@@ -80,6 +80,7 @@ class BlogFile {
      */
     updateOrAddPostIndex(postIndex) {
         let oldPostIndex = this.postIndexs.find(p => p.postid === postIndex.postid);
+
         if (oldPostIndex && postIndex.postid) {
             postIndex.id = oldPostIndex.id;
             if (oldPostIndex.title === oldPostIndex.remoteTitle) { //不相等不要覆盖
@@ -89,6 +90,7 @@ class BlogFile {
             oldPostIndex.categories = postIndex.categories;
             oldPostIndex.link = postIndex.link;
             oldPostIndex.permalink = postIndex.permalink;
+            oldPostIndex.dateCreated = postIndex.dateCreated;
         }
         else {
             postIndex.id = this.indexId;
@@ -106,6 +108,7 @@ class BlogFile {
             oldPostIndex.categories = postIndex.categories;
             oldPostIndex.link = postIndex.link;
             oldPostIndex.permalink = postIndex.permalink;
+            oldPostIndex.dateCreated = postIndex.dateCreated;
         }
         else {
             this.postIndexs.push(postIndex);
@@ -124,6 +127,7 @@ class BlogFile {
                 id: 0,
                 postid: 0,
                 title: postFile.title,
+                dateCreated:new Date()
             });
         });
     }
@@ -143,7 +147,8 @@ class BlogFile {
                 permalink: postIndex.permalink,
                 state: blogPostFile.postState(),
                 fsPath: blogPostFile.postPath,
-                remotePath: blogPostFile.remotePostPath
+                remotePath: blogPostFile.remotePostPath,
+                dateCreated:postIndex.dateCreated
             };
             return postBaseInfo;
         });
@@ -203,7 +208,7 @@ class BlogFile {
     createBlogPostFileByPostId(postId) {
         let postIndex = this.postIndexs.find(p => p.postid === postId.toString());
         if (!postIndex || !postId) {
-            postIndex = { id: this.indexId, postid: postId, title: "" };
+            postIndex = { id: this.indexId, postid: postId, title: "",dateCreated:new Date()};
         }
         return new blog_post_file_1.BlogPostFile(postIndex);
     }
@@ -224,13 +229,21 @@ class BlogFile {
      */
     pullPost(post) {
         return __awaiter(this, void 0, void 0, function* () {
+
             let blogPostFile = this.createBlogPostFileByPostId(post.postid);
+
             let description = yield post_image_replace_1.postImageReplace.toLocal(post.description);
+
             blogPostFile.updatePost(post.title, description);
+
             blogPostFile.updateRemotePost(post.title, description);
+
             blogPostFile.updateCategories(post.categories);
-            let postIndex = Object.assign({}, blogPostFile.getPostIndexInfo(), { link: post.link, permalink: post.permalink });
+
+            let postIndex = Object.assign({}, blogPostFile.getPostIndexInfo(), { link: post.link, permalink: post.permalink,dateCreated:post.dateCreated });
+
             this.updataOrAddIndex(postIndex);
+
         });
     }
     /**
@@ -276,6 +289,7 @@ class BlogFile {
                 postid: postIndex.postid,
                 title: postIndex.title,
                 description: description,
+                dateCreated:postIndex.dateCreated,
                 categories: categories
             };
             return post;

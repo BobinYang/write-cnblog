@@ -13,6 +13,31 @@ const path = require("path");
 const blog_file_1 = require("./blog-file");
 const shared_1 = require("./shared");
 const blog_config_1 = require("./blog-config");
+const dateFormat = function (d, formatStr) {
+    d = new Date(d);
+    var str = formatStr;
+    var Week = ['日', '一', '二', '三', '四', '五', '六'];
+
+    str = str.replace(/yyyy|YYYY/, d.getFullYear());
+    str = str.replace(/yy|YY/, (d.getYear() % 100) > 9 ? (d.getYear() % 100).toString() : '0' + (d.getYear() % 100));
+
+    str = str.replace(/MM/, d.getMonth() > 9 ? d.getMonth().toString() : '0' + d.getMonth());
+    str = str.replace(/M/g, d.getMonth());
+
+    str = str.replace(/w|W/g, Week[d.getDay()]);
+    str = str.replace(/dd|DD/, d.getDate() > 9 ? d.getDate().toString() : '0' + d.getDate());
+    str = str.replace(/d|D/g, d.getDate());
+
+    str = str.replace(/hh|HH/, d.getHours() > 9 ? d.getHours().toString() : '0' + d.getHours());
+
+    str = str.replace(/h|H/g, d.getHours());
+    str = str.replace(/mm/, d.getMinutes() > 9 ? d.getMinutes().toString() : '0' + d.getMinutes());
+    str = str.replace(/m/g, d.getMinutes());
+    str = str.replace(/ss|SS/, d.getSeconds() > 9 ? d.getSeconds().toString() : '0' + d.getSeconds());
+
+    str = str.replace(/s|S/g, d.getSeconds());
+    return str;
+}
 class BlogPostProvider {
     constructor() {
         this._onDidChangeTreeData = new vscode.EventEmitter();
@@ -37,12 +62,12 @@ class BlogPostProvider {
     getChildren(element) {
         if (!blog_config_1.blogConfig.blogId) {
             return [{
-                    label: "配置用户信息",
-                    command: {
-                        command: 'writeCnblog.setConfig',
-                        title: "配置用户信息"
-                    }
-                }];
+                label: "配置用户信息",
+                command: {
+                    command: 'writeCnblog.setConfig',
+                    title: "配置用户信息"
+                }
+            }];
         }
         if (element &&
             element.postBaseInfo &&
@@ -58,23 +83,23 @@ class BlogPostProvider {
         }
         return blog_file_1.blogFile.readPosts().sort((a, b) => {
             if (a.state === b.state) {
-                if (a.postId && b.postId) {
-                    return b.postId - a.postId;
+                if (a.dateCreated && b.dateCreated) {
+                    return b.dateCreated - a.dateCreated;
                 }
-                else if (a.postId && !b.postId) {
+                else if (a.dateCreated && !b.dateCreated) {
                     return -1;
                 }
-                else if (!a.postId && !b.postId) {
+                else if (!a.dateCreated && !b.dateCreated) {
                     return 1;
                 }
                 return 0;
             }
             return a.state - b.state;
-        }).map((postBaseInfo) => {
+        }).map((postBaseInfo, i) => {
             return {
                 type: BlogPostItemType.post,
-                label: postBaseInfo.title,
-                description: postBaseInfo.postId.toString(),
+                label: (i + 1) + "、" + postBaseInfo.title,
+                description: postBaseInfo.postId.toString() + " 日期：" + dateFormat(postBaseInfo.dateCreated, 'yyyy-MM-dd hh:mm:ss'),
                 postBaseInfo: postBaseInfo,
                 contextValue: this.getContextValue(postBaseInfo),
                 command: {
