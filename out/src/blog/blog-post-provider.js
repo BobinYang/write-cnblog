@@ -70,10 +70,10 @@ class BlogPostProvider {
                 return 0;
             }
             return a.state - b.state;
-        }).map((postBaseInfo) => {
+        }).map((postBaseInfo,i) => {
             return {
                 type: BlogPostItemType.post,
-                label: postBaseInfo.title,
+                label: (i+1)+"、"+postBaseInfo.title,
                 description: postBaseInfo.postId.toString(),
                 postBaseInfo: postBaseInfo,
                 contextValue: this.getContextValue(postBaseInfo),
