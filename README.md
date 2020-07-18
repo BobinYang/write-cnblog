@@ -1,4 +1,6 @@
 # WriteCnblog README
+基于原插件，增加了批量发布的功能。
+
 
 "WriteCnblog" 是一个基于rpcxml协议给[博客园](http://www.cnblogs.com/)发布Markdown格式的插件
 
