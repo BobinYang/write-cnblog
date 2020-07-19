@@ -289,7 +289,7 @@ class BlogFile {
                 postid: postIndex.postid,
                 title: postIndex.title,
                 description: description,
-                dateCreated:postIndex.dateCreated,
+                dateCreated:new Date(postIndex.dateCreated),
                 categories: categories
             };
             return post;
