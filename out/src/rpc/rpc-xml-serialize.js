@@ -102,7 +102,7 @@ class RpcXmlSerialize {
     }
     escape(s) {
         return String(s)
-            .replace(/&(?!\w+;)/g, '&amp;')
+            .replace(/&(?=\w+;)/g, '&amp;')
             .replace(/@/g, '&#64;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;')

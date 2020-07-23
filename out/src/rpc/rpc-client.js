@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const fs = require("fs");
 const rpc_xml_serialize_1 = require("./rpc-xml-serialize");
 const rpc_xml_deserialize_1 = require("./rpc-xml-deserialize");
 const request = require('request');
@@ -54,10 +55,12 @@ class RpcClient {
      */
     editPost(param) {
         return __awaiter(this, void 0, void 0, function* () {
+            fs.writeFileSync("D:\log.txt", "文章更新请求序列化前"+param.toString() + "\r\n", { 'flag': 'a' });
             let data = this.rpcXmlSerialize.serialize({
                 methodName: 'metaWeblog.editPost',
                 params: param
             });
+            fs.writeFileSync("D:\log.txt", "文章更新请求序列化后"+data + "\r\n", { 'flag': 'a' });
             let result = yield this.postRequest(data);
             return yield this.rpcXmlDeserialize.deserializeBoolean(result);
         });
@@ -89,6 +92,7 @@ class RpcClient {
                 params: param
             });
             let result = yield this.postRequest(data);
+            fs.writeFileSync("D:\log.txt", "获取现有文章后"+result.toString() + "\r\n", { 'flag': 'a' });
             return yield this.rpcXmlDeserialize.deserializePostStruct(result);
         });
     }

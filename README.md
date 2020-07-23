@@ -1,10 +1,16 @@
 # WriteCnblog README
 基于原插件，增加了批量发布的功能。
 
+插件位置：
+
+> C:\Users\用户\.vscode\extensions\caipeiyu.write-cnblog-0.1.0
+
+
+### 以下为原作者提供的内容
 
 "WriteCnblog" 是一个基于rpcxml协议给[博客园](http://www.cnblogs.com/)发布Markdown格式的插件
 
-![](https://github.com/kotcmm/writeCnblog/raw/master/resources/home.JPG)
+![](https://images.gitee.com/uploads/images/2020/0723/082522_f80772f6_7768584.jpeg)
 
 ## Features
 
